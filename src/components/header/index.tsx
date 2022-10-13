@@ -1,73 +1,79 @@
 import React, { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun, faDesktopAlt } from '@fortawesome/free-solid-svg-icons'
-import { useClickOustside, usePrefferedTheme } from '../../utils/hooks'
+import { useClickOustside, useTheme } from '../../utils/hooks'
 
 const Header = () => {
   const [dropdown, setDropdown] = useState<boolean>(false)
   const dropdownRef = useClickOustside(setDropdown)
-  const [theme, setTheme] = usePrefferedTheme()
+  const [theme, setTheme] = useTheme()
   const handleChange = (e: React.MouseEvent<HTMLButtonElement>): void => {
-    //@ts-expect-error
     setTheme((e.currentTarget as HTMLButtonElement).value)
-
     setDropdown(false)
   }
 
   return (
-    <header className="h-16 border-b-2 bg-gradient-to-r from-indigo-500 to-purple-500 via-pink-500 flex justify-center items-center">
-      <div className="w-1/6" />
-      <h1 className="text-4xl w-2/3 text-center">Quest Control</h1>
+    <header className="h-16 border-b-2 flex justify-center items-center">
+      <div className="w-[10%]" />
+      <h1 className="text-4xl w-4/5 text-center shrink">Quest Control</h1>
 
-      <div
-        className="w-1/6 flex justify-center items-center pr-2 relative"
-        ref={dropdownRef}
-      >
-        <button className="rounded-md border-2  p-2 mr-10 hover:bg-gray-300 hover:text-gray-800 duration-200">
+      <div className="min-w-fit md:flex justify-center items-center gap-4 hidden   mr-4 lg:mr-0">
+        <button className="rounded-md border-2  p-1 lg:p-2 hover:bg-gray-300 hover:text-gray-800 duration-200">
           Sign up
         </button>
-        <button onClick={() => setDropdown(!dropdown)} className="h-10 w-10">
-          {theme === 'dark' && (
-            <FontAwesomeIcon className="text-3xl" icon={faMoon} />
+        <div
+          ref={dropdownRef}
+          className="flex flex-col relative justify-start items-center"
+        >
+          <button
+            onClick={() => setDropdown(!dropdown)}
+            className="h-10 w-10 hover:text-gray-700 duration-200 flex justify-center items-center "
+          >
+            {theme === 'dark' && (
+              <FontAwesomeIcon className="text-3xl" icon={faMoon} />
+            )}
+            {theme === 'light' && (
+              <FontAwesomeIcon className="text-3xl" icon={faSun} />
+            )}
+            {theme === 'system' && (
+              <FontAwesomeIcon className="text-3xl" icon={faDesktopAlt} />
+            )}
+          </button>
+          {dropdown && (
+            <div className="absolute mt-0.5 w-14 h-40 top-full bg-gray-300  rounded-md  flex flex-col justify-around animate-growDown origin-top">
+              <button
+                className="w-full flex py-1 justify-center items-center hover:bg-gray-700 hover:text-gray-300 text-gray-700 duration-200"
+                onClick={handleChange}
+                value={'dark'}
+              >
+                <FontAwesomeIcon
+                  icon={faMoon}
+                  className="text-inherit text-2xl"
+                />
+              </button>
+              <button
+                className="w-full flex py-1 justify-center items-center hover:bg-gray-700 hover:text-gray-300 text-gray-700 duration-200"
+                onClick={handleChange}
+                value={'light'}
+              >
+                <FontAwesomeIcon
+                  icon={faSun}
+                  className="text-inherit text-2xl"
+                />
+              </button>
+              <button
+                className="w-full flex py-1 justify-center items-center hover:bg-gray-700 hover:text-gray-300 text-gray-700 duration-200"
+                onClick={handleChange}
+                value={'system'}
+              >
+                <FontAwesomeIcon
+                  icon={faDesktopAlt}
+                  className="text-inherit text-2xl"
+                />
+              </button>
+            </div>
           )}
-          {theme === 'light' && (
-            <FontAwesomeIcon className="text-3xl" icon={faSun} />
-          )}
-          {theme === 'system' && (
-            <FontAwesomeIcon className="text-3xl" icon={faDesktopAlt} />
-          )}
-        </button>
-        {dropdown && (
-          <div className="absolute w-24 h-40 bg-gray-300 top-12 rounded-md right-2 flex flex-col justify-around animate-growDown origin-top">
-            <button
-              className="w-full flex py-1 justify-center items-center hover:bg-gray-700 hover:text-gray-300 text-gray-700 duration-200"
-              onClick={handleChange}
-              value={'dark'}
-            >
-              <FontAwesomeIcon
-                icon={faMoon}
-                className="text-inherit text-2xl"
-              />
-            </button>
-            <button
-              className="w-full flex py-1 justify-center items-center hover:bg-gray-700 hover:text-gray-300 text-gray-700 duration-200"
-              onClick={handleChange}
-              value={'light'}
-            >
-              <FontAwesomeIcon icon={faSun} className="text-inherit text-2xl" />
-            </button>
-            <button
-              className="w-full flex py-1 justify-center items-center hover:bg-gray-700 hover:text-gray-300 text-gray-700 duration-200"
-              onClick={handleChange}
-              value={'system'}
-            >
-              <FontAwesomeIcon
-                icon={faDesktopAlt}
-                className="text-inherit text-2xl"
-              />
-            </button>
-          </div>
-        )}
+        </div>
       </div>
     </header>
   )

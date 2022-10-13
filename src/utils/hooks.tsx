@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 export const useClickOustside = (callBack: Function) => {
   const ref = useRef<HTMLDivElement>(null)
@@ -22,23 +22,38 @@ export const useClickOustside = (callBack: Function) => {
   return ref
 }
 
-export const usePrefferedTheme = () => {
+export const useTheme = (): [
+  string,
+  React.Dispatch<React.SetStateAction<string>>
+] => {
   const [theme, setTheme] = useState('system')
-  useEffect(() => {
-    console.log('Input:', theme)
+  const [initialLoad, setInitialLoad] = useState(true)
 
-    if (theme === 'system') {
+  const InitialCheck = () => {
+    if (localStorage.getItem('theme'))
+      document.documentElement.classList.add('dark')
+    else
       window.matchMedia('(prefers-color-scheme:dark)').matches
         ? console.log('dark')
         : console.log('light')
+  }
 
-      return
+  if (initialLoad) InitialCheck()
+
+  useEffect(() => {
+    if (theme === 'system') {
+      //delete from localStorage
+
+      return console.log('system')
     }
+
     if (theme === 'dark') {
       return console.log('dark')
     }
 
     console.log('light')
+
+    setInitialLoad(false)
   }, [theme])
 
   return [theme, setTheme]

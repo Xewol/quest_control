@@ -8,7 +8,7 @@ const App = () => {
   }, [])
 
   return (
-    <div className="box-border w-screen h-screen flex flex-col bg-gradient-to-r from-indigo-500 to-purple-500 via-pink-500 text-gray-300 dark:text-black font-[Poppins]">
+    <div className="box-border w-screen h-screen flex flex-col bg-gradient-to-r from-indigo-500  to-pink-500 text-gray-300 dark:text-black font-[Poppins]">
       <Header />
       <Sections />
     </div>
