@@ -17,8 +17,8 @@ const Header = () => {
       <div className="w-[10%]" />
       <h1 className="text-4xl w-4/5 text-center shrink">Quest Control</h1>
 
-      <div className="min-w-fit md:flex justify-center items-center gap-4 hidden   mr-4 lg:mr-0">
-        <button className="rounded-md border-2  p-1 lg:p-2 hover:bg-gray-300 hover:text-gray-800 duration-200">
+      <div className="min-w-fit md:flex justify-center items-center gap-4 hidden   mr-4 2xl:mr-0">
+        <button className="rounded-md border-2  p-1.5 2xl:p-2 hover:bg-gray-300 hover:text-gray-800 duration-200">
           Sign up
         </button>
         <div
@@ -40,7 +40,7 @@ const Header = () => {
             )}
           </button>
           {dropdown && (
-            <div className="absolute mt-0.5 w-14 h-40 top-full bg-gray-300  rounded-md  flex flex-col justify-around animate-growDown origin-top">
+            <div className="absolute mt-0.5 w-14 h-40 z-20 top-full bg-gray-300  rounded-md  flex flex-col justify-around animate-growDown origin-top">
               <button
                 className="w-full flex py-1 justify-center items-center hover:bg-gray-700 hover:text-gray-300 text-gray-700 duration-200"
                 onClick={handleChange}
