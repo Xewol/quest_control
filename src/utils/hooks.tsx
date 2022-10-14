@@ -26,35 +26,26 @@ export const useTheme = (): [
   string,
   React.Dispatch<React.SetStateAction<string>>
 ] => {
-  const [theme, setTheme] = useState('system')
-  const [initialLoad, setInitialLoad] = useState(true)
+  const [theme, setTheme] = useState(localStorage.theme || 'system')
 
-  const InitialCheck = () => {
-    if (localStorage.getItem('theme'))
-      document.documentElement.classList.add('dark')
-    else
-      window.matchMedia('(prefers-color-scheme:dark)').matches
-        ? console.log('dark')
-        : console.log('light')
+  // Whenever the user explicitly chooses light mode
+  if (theme === 'light') {
+    document.documentElement.classList.remove('dark')
+    localStorage.theme = 'light'
   }
 
-  if (initialLoad) InitialCheck()
-
-  useEffect(() => {
-    if (theme === 'system') {
-      //delete from localStorage
-
-      return console.log('system')
-    }
-
-    if (theme === 'dark') {
-      return console.log('dark')
-    }
-
-    console.log('light')
-
-    setInitialLoad(false)
-  }, [theme])
+  // Whenever the user explicitly chooses dark mode
+  if (theme === 'dark') {
+    localStorage.theme = 'dark'
+    document.documentElement.classList.add('dark')
+  }
+  // Whenever the user explicitly chooses to respect the OS preference
+  if (theme === 'system') {
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? document.documentElement.classList.add('dark')
+      : document.documentElement.classList.remove('dark')
+    localStorage.removeItem('theme')
+  }
 
   return [theme, setTheme]
 }
